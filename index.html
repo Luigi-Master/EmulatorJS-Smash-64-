@@ -2,10 +2,8 @@
 <html>
     <head>
         <title>EmulatorJS</title>
-
         <link rel="icon" href="docs/favicon.ico" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <style>
             body, html {
                 height: 100%;
@@ -226,6 +224,20 @@
                 // Trigger netplay logic here (e.g., connecting to a server, etc.)
                 alert("Starting Netplay...");
                 // Here, add whatever logic you need to trigger your server or emulator for netplay
+                const socket = new WebSocket('ws://your-server-ip:8080');
+
+                socket.onopen = () => {
+                    console.log('Connected to the WebSocket server.');
+                    socket.send('Player ready!');
+                };
+
+                socket.onmessage = (event) => {
+                    console.log('Message from server:', event.data);
+                };
+
+                socket.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                };
             }
         </script>
     </body>
